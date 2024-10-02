@@ -1,5 +1,6 @@
 package com.projectx.homework1_5month.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
@@ -23,11 +24,17 @@ class AppAdapter(
             binding.tvSeein2.text = character.created
             Glide.with(binding.ivImage.context)
                 .load(character.image)
-                .placeholder(R.drawable.placeholder_image)
+                .placeholder(R.drawable.lana)
                 .into(binding.ivImage)
 
             itemView.setOnClickListener {
                 onItemClick(character)
+            }
+            when (character.status) {
+                "Alive" -> binding.statusIndicator.setBackgroundColor(Color.GREEN)
+                "Dead" -> binding.statusIndicator.setBackgroundColor(Color.BLACK)
+                "unknown" -> binding.statusIndicator.setBackgroundColor(Color.GRAY)
+                else -> binding.statusIndicator.setBackgroundColor(Color.TRANSPARENT)
             }
         }
     }

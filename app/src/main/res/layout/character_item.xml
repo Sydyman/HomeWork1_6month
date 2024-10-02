@@ -9,25 +9,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded"
         >
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tabLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- TabLayout для индикаторов -->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        <View
+            android:id="@+id/status_indicator"
+            android:layout_width="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_deadOr"
             app:layout_constraintStart_toEndOf="@+id/iv_image"
-            app:tabIndicatorColor="#4CAF50"
-            app:tabIndicatorHeight="4dp"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/circle_indicator" />
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="150dp"
