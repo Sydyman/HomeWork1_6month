@@ -2,14 +2,12 @@ package com.projectx.homework1_5month.network
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.RecyclerView
 import com.projectx.homework1_5month.api.ApiService
 import com.projectx.homework1_5month.models.BaseResponse
 import com.projectx.homework1_5month.models.Character
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 class Reprository @Inject constructor(
