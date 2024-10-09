@@ -8,7 +8,7 @@ import retrofit2.http.Path
 
 interface ApiService {
     @GET("character")
-    fun fetchCharacter(): Call<BaseResponse>
+    fun fetchCharacter(): Call<List<Character>>
 
     @GET("character/{id}")
     fun fetchCharacterById(@Path("id") id: Int): Call<Character>

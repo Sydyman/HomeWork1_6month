@@ -1,22 +1,30 @@
 package com.projectx.homework1_5month.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.projectx.homework1_5month.databinding.FragmentFirstBinding
 import com.projectx.homework1_5month.adapter.AppAdapter
+import com.projectx.homework1_5month.adapter.CharacterListAdapter
 import com.projectx.homework1_5month.viewModel.FragmentViewModel
+import com.projectx.resource.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
 
-    private lateinit var appAdapter: AppAdapter
+    private val charactersAdapter by lazy {
+        CharacterListAdapter()
+    }
     private val viewModel by lazy {
         ViewModelProvider(this)[FragmentViewModel::class.java]
     }
@@ -24,7 +32,7 @@ class FirstFragment : Fragment() {
         FragmentFirstBinding.inflate(layoutInflater)
     }
 
-    private var characteList: List<Character> = emptyList()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,24 +41,29 @@ class FirstFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view,savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
 
-        val recyclerView = binding.rvApp
+        viewModel.fetchCharacters().observe(this) { res ->
+            binding.progresBar.isVisible = res is Resource.Loading
+            when (res) {
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), res.message, Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Success -> {
+                    charactersAdapter.submitList(res.data)
+                }
 
-
-        appAdapter = AppAdapter(emptyList()) { character ->
-            val action = FirstFragmentDirections.actionFirstFragmentToSecondFragment(character)
-            findNavController().navigate(action)
+                else -> {}
+            }
         }
+    }
 
-
-
-        recyclerView.adapter = appAdapter
-
-        viewModel.characters.observe(viewLifecycleOwner, { characters ->
-            appAdapter.updateData(characters)
-        })
+    private fun setUpRecyclerView()= with(binding.rvApp) {
+     adapter = charactersAdapter
+        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
     }
 }
 

@@ -12,5 +12,5 @@ class FragmentViewModel @Inject constructor (
     private val reprository: Reprository
 ) :ViewModel() {
 
-    val characters: LiveData<List<Character>> = reprository.fetchCharacters()
+    fun fetchCharacters() = reprository.fetchCharacters()
 }
