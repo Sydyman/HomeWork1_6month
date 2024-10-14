@@ -6,34 +6,37 @@ import com.projectx.homework1_5month.api.ApiService
 import com.projectx.homework1_5month.models.BaseResponse
 import com.projectx.homework1_5month.models.Character
 import com.projectx.resource.Resource
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class Reprository @Inject constructor(
-
-    private val api: ApiService
-
+    private val api: ApiService,
+    private val coroutineScope: CoroutineScope
 ) {
 
-    fun fetchCharacters(): LiveData<Resource <List<Character>>> {
-        val data = MutableLiveData<Resource <List<Character>>>()
+    fun fetchCharacters(): LiveData<Resource<List<Character>>> {
+        val data = MutableLiveData<Resource<List<Character>>>()
         data.postValue(Resource.Loading())
-        api.fetchCharacter().enqueue(object : Callback<List<Character>> {
-            override fun onResponse(call: Call<List<Character>>, response: Response<List<Character>>) {
+
+
+        coroutineScope.launch {
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    api.fetchCharacter()
+                }
+
                 if (response.isSuccessful && response.body() != null) {
                     data.postValue(Resource.Success(response.body()!!))
-
+                } else {
+                    data.postValue(Resource.Error("Error: ${response.code()}"))
                 }
+            } catch (t: Throwable) {
+                data.postValue(Resource.Error(t.localizedMessage ?: "Unknown Error"))
             }
-
-
-            override fun onFailure(call: Call<List<Character>>, t: Throwable) {
-                 data.postValue(Resource.Error(t.localizedMessage?:"Unknown Error"))
-            }
-        })
+        }
         return data
     }
-
 }
