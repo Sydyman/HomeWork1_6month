@@ -11,15 +11,13 @@ import com.projectx.homework1_5month.databinding.FragmentFirstBinding
 import com.projectx.homework1_5month.adapter.AppAdapter
 import com.projectx.homework1_5month.viewModel.FragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-@AndroidEntryPoint
 class FirstFragment : Fragment() {
 
     private lateinit var appAdapter: AppAdapter
-    private val viewModel by lazy {
-        ViewModelProvider(this)[FragmentViewModel::class.java]
-    }
+    private val viewModel: FragmentViewModel by viewModel()
     private val binding by lazy {
         FragmentFirstBinding.inflate(layoutInflater)
     }

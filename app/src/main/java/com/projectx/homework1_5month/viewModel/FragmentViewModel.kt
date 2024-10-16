@@ -7,8 +7,8 @@ import com.projectx.homework1_5month.network.Reprository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-@HiltViewModel
-class FragmentViewModel @Inject constructor (
+
+class FragmentViewModel  (
     private val reprository: Reprository
 ) :ViewModel() {
 

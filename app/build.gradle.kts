@@ -72,5 +72,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     kapt ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("com.google.android.material:material:1.9.0")
+    implementation("io.insert-koin:koin-android:3.5.0")
 
 }

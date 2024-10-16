@@ -9,7 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class Reprository2 @Inject constructor(private val api: ApiService) {
+class Reprository2 (private val api: ApiService) {
 
     fun getCharacterById(id: Int): MutableLiveData<Character?> {
         val data = MutableLiveData<Character?>()
