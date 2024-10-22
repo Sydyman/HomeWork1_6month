@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.projectx.homework1_5month.databinding.FragmentFirstBinding
 import com.projectx.homework1_5month.adapter.AppAdapter
@@ -22,12 +21,11 @@ class FirstFragment : Fragment() {
         FragmentFirstBinding.inflate(layoutInflater)
     }
 
-    private var characteList: List<Character> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return binding.root
     }
 
@@ -35,6 +33,8 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view,savedInstanceState)
 
         val recyclerView = binding.rvApp
+
+
 
 
         appAdapter = AppAdapter(emptyList()) { character ->

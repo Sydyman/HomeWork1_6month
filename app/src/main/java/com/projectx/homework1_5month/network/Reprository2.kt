@@ -9,24 +9,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class Reprository2 (private val api: ApiService) {
+class Reprository2 (private val api: ApiService):BaseRepository() {
 
-    fun getCharacterById(id: Int): MutableLiveData<Character?> {
-        val data = MutableLiveData<Character?>()
-
-        api.fetchCharacterById(id).enqueue(object : Callback<Character> {
-            override fun onResponse(call: Call<Character>, response: Response<Character>) {
-                if (response.isSuccessful) {
-                    data.postValue(response.body())
-                } else {
-                    data.postValue(null)
-                }
-            }
-
-            override fun onFailure(call: Call<Character>, t: Throwable) {
-                data.postValue(null)
-            }
-        })
-        return data
+    suspend fun getCharacterById(id: Int): LiveData<Character?> {
+        return makeApiCall { api.fetchCharacterById(id)  }
     }
+
+
 }
